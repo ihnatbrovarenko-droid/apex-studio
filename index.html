@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex Studio — Apex War Strategy</title>
+    <meta name="description" content="Официальный сайт глобальной инди-стратегии Apex War от Apex Studio (KeNi & Ih_mih).">
+    <meta name="keywords" content="Apex War, Apex Studio, AWS, AS, KeNi, Ih_mih, стратегия, скачать игра">
+    <style>
+        :root {
+            --bg-color: #0d0f12;
+            --card-bg: #161922;
+            --accent-color: #ffaa00;
+            --accent-hover: #e09500;
+            --text-color: #e1e6f0;
+            --text-muted: #8c96a6;
+            --border-color: #262a38;
+            --success-color: #28a745;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-top: 80px;
+        }
+
+        /* Навигация */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background-color: rgba(22, 25, 34, 0.95);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            z-index: 1000;
+            backdrop-filter: blur(8px);
+        }
+
+        .logo-text {
+            font-size: 22px;
+            font-weight: bold;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        .logo-text span {
+            color: var(--accent-color);
+        }
+
+        nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-muted);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover {
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-btn.active {
+            color: #111;
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .slide {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        /* Двухколоночный блок с логотипом слева */
+        .header-layout {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .logo-container {
+            flex: 0 0 220px;
+            background: #fff;
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .logo-container svg {
+            width: 100%;
+            height: auto;
+        }
+
+        .header-info {
+            flex: 1;
+        }
+
+        h1, h2, h3 {
+            color: #fff;
+            margin-bottom: 15px;
+        }
+
+        h1 { font-size: 28px; }
+        h2 { font-size: 22px; border-bottom: 2px solid var(--border-color); padding-bottom: 8px; }
+
+        p {
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .passport-grid {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 10px 20px;
+            background: rgba(0,0,0,0.2);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .passport-label {
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .download-box {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(180deg, var(--card-bg) 0%, rgba(255, 170, 0, 0.05) 100%);
+            border: 2px dashed var(--accent-color);
+            border-radius: 12px;
+        }
+
+        .btn-download {
+            display: inline-block;
+            background-color: var(--success-color);
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 16px 36px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: transform 0.2s, background-color 0.2s;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .btn-download:hover {
+            transform: translateY(-2px);
+            background-color: #218838;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .team-member {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .team-member h4 {
+            color: var(--accent-color);
+            margin-bottom: 5px;
+        }
+
+        .chat-box {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            height: 180px;
+            overflow-y: auto;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .chat-msg {
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .chat-msg .user {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 12px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        button.btn-submit {
+            background: var(--accent-color);
+            color: #111;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button.btn-submit:hover {
+            background: var(--accent-hover);
+        }
+
+        @media (max-width: 768px) {
+            .header-layout {
+                flex-direction: column;
+                text-align: center;
+            }
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-text">APEX <span>STUDIO</span></div>
+        <nav>
+            <button class="nav-btn active" onclick="showSlide('slide1', this)">🏠 Скачать Apex War</button>
+            <button class="nav-btn" onclick="showSlide('slide2', this)">⚔️ Про проект AWS</button>
+            <button class="nav-btn" onclick="showSlide('slide3', this)">🏛 Про студию AS</button>
+            <button class="nav-btn" onclick="showSlide('slide4', this)">🔄 Обновления</button>
+        </nav>
+    </header>
+
+    <div class="container">
+
+        <!-- ================= СЛАЙД 1: APEX WAR ================= -->
+        <div id="slide1" class="slide active">
+            <div class="card">
+                <div class="header-layout">
+                    <!-- Логотип игры Apex War (Слева) -->
+                    <div class="logo-container">
+                        <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <polygon points="150,20 230,100 190,100 150,60 110,100 70,100" fill="#222"/>
+                            <polygon points="150,50 210,110 180,110 150,80 120,110 90,110" fill="#111"/>
+                            <text x="150" y="150" font-family="Arial, sans-serif" font-weight="900" font-size="28" fill="#111" text-anchor="middle">APEX WAR</text>
+                            <text x="150" y="170" font-family="Arial, sans-serif" font-weight="bold" font-size="11" fill="#444" letter-spacing="2" text-anchor="middle">CINEMATIC STRATEGY</text>
+                        </svg>
+                    </div>
+                    <!-- Описание справа -->
+                    <div class="header-info">
+                        <h1>Apex War Strategy</h1>
+                        <p><strong>Apex War</strong> — это масштабная глобальная 2D-стратегия, в которой судьба целого государства оказывается в ваших руках. Вам предстоит пройти путь от небольшого региона до великой мировой державы.</p>
+                        <p>Возьмите под контроль бригады, пехоту, танковые соединения и флот. Прокладывайте маршруты, возводите фортификации и выкапывайте линии окопов.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h2>📋 Паспорт игры</h2>
+                    <div class="passport-grid">
+                        <div class="passport-label">Название:</div><div>Apex War</div>
+                        <div class="passport-label">Жанр:</div><div>Глобальная стратегия / Инди</div>
+                        <div class="passport-label">Разработчики:</div><div>KeNi & Ih_mih</div>
+                        <div class="passport-label">Старт разработки:</div><div>16.10.2026</div>
+                        <div class="passport-label">Планируемый релиз:</div><div>20.11.2026</div>
+                        <div class="passport-label">Статус:</div><div>Тестирование</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>🖥 Системные требования</h2>
+                    <div class="passport-grid">
+                        <div class="passport-label">ОС:</div><div>Windows 10 / 11 (64-bit)</div>
+                        <div class="passport-label">Процессор:</div><div>2.0 GHz Dual Core</div>
+                        <div class="passport-label">ОЗУ:</div><div>2–4 GB RAM</div>
+                        <div class="passport-label">Видеокарта:</div><div>DirectX / OpenGL support</div>
+                        <div class="passport-label">Место на диске:</div><div>~300 MB</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card download-box">
+                <h2 style="border:none; margin-bottom: 10px;">Тестовая сборка Apex War</h2>
+                <p style="color: var(--text-muted); margin-bottom: 20px;">Готовность релиза запланирована на 20.11.2026</p>
+                <a href="#" class="btn-download" onclick="alert('Скачивание откроется ближе к релизу 20.11.2026!')">🟩 СКАЧАТЬ APEX WAR (ZIP)</a>
+            </div>
+
+            <div class="card">
+                <h2>💬 Отзывы и Сообщество</h2>
+                <div class="chat-box" id="chat">
+                    <div class="chat-msg"><span class="user">Ih_mih:</span> Сборка летит отлично, FPS стабильный!</div>
+                    <div class="chat-msg"><span class="user">KeNi:</span> Ждём первых фидбеков по генерации карты.</div>
+                </div>
+                <input type="text" id="userName" placeholder="Ваше имя...">
+                <textarea id="userMsg" rows="2" placeholder="Оставьте отзыв..."></textarea>
+                <button class="btn-submit" onclick="addComment()">Оставить отзыв</button>
+            </div>
+        </div>
+
+        <!-- ================= СЛАЙД 2: AWS ================= -->
+        <div id="slide2" class="slide">
+            <div class="card">
+                <div class="header-layout">
+                    <!-- Логотип AWS (Слева) -->
+                    <div class="logo-container">
+                        <svg viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg">
+                            <text x="150" y="95" font-family="Arial, sans-serif" font-weight="900" font-size="70" fill="#111" text-anchor="middle">AWS</text>
+                        </svg>
+                    </div>
+                    <!-- Описание справа -->
+                    <div class="header-info">
+                        <h1>Apex War Strategy (AWS)</h1>
+                        <p><strong>AWS</strong> означает «Высшая Война» или «Война за Вершину». Это подразделение разработки, сфокусированное на создании глобальной стратегии про ресурсы, территории и мировое доминирование.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>👥 Команда AWS</h2>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <h4>KeNi</h4>
+                        <p><strong>Lead Developer</strong></p>
+                        <p style="font-size: 13px; color: var(--text-muted);">Логика механик, архитектура, UI/UX.</p>
+                    </div>
+                    <div class="team-member">
+                        <h4>Ih_mih</h4>
+                        <p><strong>Co-Founder & Tester</strong></p>
+                        <p style="font-size: 13px; color: var(--text-muted);">Геймдизайн, соавтор систем.</p>
+                    </div>
+                    <div class="team-member">
+                        <h4>Motor</h4>
+                        <p><strong>Architecture</strong></p>
+                        <p style="font-size: 13px; color: var(--text-muted);">Алгоритмы генерации карты.</p>
+                    </div>
+                    <div class="team-member">
+                        <h4>Zero</h4>
+                        <p><strong>AI Logic</strong></p>
+                        <p style="font-size: 13px; color: var(--text-muted);">Искусственный интеллект боёв.</p>
+                    </div>
+                    <div class="team-member">
+                        <h4>Vodka</h4>
+                        <p><strong>Visuals</strong></p>
+                        <p style="font-size: 13px; color: var(--text-muted);">Оформление юнитов и техники.</p>
+                    </div>
+                    <div class="team-member">
+                        <h4>Nasta & Bylka</h4>
+                        <p><strong>Audio</strong></p>
+                        <p style="font-size: 13px; color: var(--text-muted);">Звуки окружения и боя.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= СЛАЙД 3: AS ================= -->
+        <div id="slide3" class="slide">
+            <div class="card">
+                <div class="header-layout">
+                    <!-- Логотип AS (Слева) -->
+                    <div class="logo-container">
+                        <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <text x="150" y="110" font-family="Arial, sans-serif" font-weight="900" font-size="80" fill="#111" text-anchor="middle">AS</text>
+                            <text x="150" y="150" font-family="Arial, sans-serif" font-weight="bold" font-size="16" fill="#111" letter-spacing="2" text-anchor="middle">APEX STUDIO</text>
+                        </svg>
+                    </div>
+                    <!-- Описание справа -->
+                    <div class="header-info">
+                        <h1>Apex Studio (AS)</h1>
+                        <p><strong>Apex Studio (AS)</strong> — независимая инди-студия разработки видеоигр, основанная двумя энтузиастами: <strong>KeNi</strong> и <strong>Ih_mih</strong>.</p>
+                        <p>Мы фокусируемся на оптимизации, честном ИИ и глубоких экономических механиках.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>👤 Основатели</h2>
+                <div class="grid-2">
+                    <div class="team-member">
+                        <h3 style="color: var(--accent-color);">KeNi</h3>
+                        <p><strong>Co-Founder & Lead Developer</strong></p>
+                        <p style="font-size: 14px; margin-top: 10px;">Главный разработчик и идеолог Apex Studio. Отвечает за код, баланс и архитектуру игры Apex War.</p>
+                    </div>
+                    <div class="team-member">
+                        <h3 style="color: var(--accent-color);">Ih_mih</h3>
+                        <p><strong>Co-Founder & Game Designer</strong></p>
+                        <p style="font-size: 14px; margin-top: 10px;">Сооснователь студии. Отвечает за проверку игровой логики, поиск багов и проектирование систем.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= СЛАЙД 4: ОБНОВЛЕНИЯ ================= -->
+        <div id="slide4" class="slide">
+            <div class="card">
+                <h2>🔄 Журнал обновлений</h2>
+                <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
+                    <h4 style="color: var(--accent-color);">Патч v0.1.2 — 16.10.2026</h4>
+                    <ul style="padding-left: 20px; font-size: 14px; margin-top: 8px;">
+                        <li>Оптимизирован рендеринг карты.</li>
+                        <li>Добавлено перетаскивание армий в Штабе.</li>
+                        <li>Внедрена система счастья населения.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function showSlide(slideId, btn) {
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach(s => s.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(b => b.classList.remove('active'));
+
+            document.getElementById(slideId).classList.add('active');
+            btn.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function addComment() {
+            const name = document.getElementById('userName').value.trim();
+            const msg = document.getElementById('userMsg').value.trim();
+
+            if (name && msg) {
+                const chat = document.getElementById('chat');
+                const newMsg = document.createElement('div');
+                newMsg.className = 'chat-msg';
+                newMsg.innerHTML = `<span class="user">${name}:</span> ${msg}`;
+                chat.appendChild(newMsg);
+                document.getElementById('userMsg').value = '';
+                chat.scrollTop = chat.scrollHeight;
+            } else {
+                alert('Пожалуйста, введите имя и сообщение!');
+            }
+        }
+    </script>
+</body>
+</html>
